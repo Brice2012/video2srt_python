@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]  # 打包依赖
+build-backend = "setuptools.build_meta"  # 构建后端
+
+[project]
+name = "video2srt"
+version = "0.2.2"
+description = "This is a simple project that converts speech from video into subtitles by brice"
+readme = "README.md"
+requires-python = ">=3.13.5"
+dependencies = [
+    "requests >=2.32.3",
+    "urllib3 >=2.3.0",
+    "numpy >=2.1.3",
+    "pandas >=2.2.3",
+    "openai-whisper >=20250625",
+    "torch >=2.9.1",  # 如果有GPU，可使用nvidia-smi查看cuda版本，然后下载安装合适的支持GPU的torch包版本，如: 2.9.1+cu126
+    "sentencepiece >=0.2.1",
+    "deep-translator >= 1.11.4", # pip install deep_translator
+    "transformers >=4.57.3"
+]
+
+[tool.setuptools.package-data]
+video2srt = ["test_video.mp4"]
