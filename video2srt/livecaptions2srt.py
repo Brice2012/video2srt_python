@@ -6,7 +6,7 @@
 #%%
 # 导入必要的包
 from operator import is_
-import re, time, random, os
+import re, time, random, os, tqdm
 from datetime import datetime, timedelta
 from transformers import pipeline
 from transformers import M2M100ForConditionalGeneration, M2M100Tokenizer
@@ -61,6 +61,7 @@ def livecaptions_to_srt(
     use_gpu = use_gpu and torch.cuda.is_available()
     # compute_type = "float16" if use_gpu else "float32" #老版本不支持float16
     if use_gpu:
+        print("尝试使用GPU加速...")
         torch.backends.cuda.matmul.allow_tf32 = False
         torch.backends.cudnn.allow_tf32 = False
         torch.cuda.empty_cache()
@@ -77,7 +78,7 @@ def livecaptions_to_srt(
     live_text = read_live_txt(file_path)
     with open(file_name_source, 'w', encoding='utf-8') as file:
         file.write(live_text)
-
+    print(f"整理后的实时字幕文本已保存到：{file_name_source}")
     # 自定义起始基准时间（例如：12:23:00）
     # base_start_time = "12:20:48"
     # 时间为file_name_source中间的部分转换过来
@@ -101,6 +102,9 @@ def livecaptions_to_srt(
     srt_lines = []
     total_matches = len(matches)
     
+    # 为for循环添加进度条
+    # 进度条配置
+    progress_bar = tqdm.tqdm(total=total_matches, desc="处理进度", unit="条")
     for idx, (time_str, content) in enumerate(matches):
         # 清理文本内容（去除首尾空白、多余换行）
         text = content.strip()
@@ -153,13 +157,16 @@ def livecaptions_to_srt(
             text_zh,
             ""  # 空行分隔不同字幕
         ])
-    
+        
+        # 更新进度条
+        progress_bar.update(1)
+    progress_bar.close()
     # 4. 拼接所有行，生成最终SRT字符串
     srt_content = '\n'.join(srt_lines).strip()
     # 保存到SRT文件
     with open(srt_output_path, "w", encoding="utf-8") as f:
         f.write(srt_content)
-        
+        print(f"SRT 文件已保存到：{srt_output_path}")
     return srt_lines
 
 #%%
