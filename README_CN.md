@@ -216,6 +216,27 @@ python >= 3.13.5
     print("\n".join(srt_lines[:7]))
     ```
 
+### 使用示例（通过实时字幕和save_live_captions软件保存实时字幕内容）
+
+    ```python
+    # 从实时字幕文件生成SRT
+    from video2srt import livecaptions_to_srt
+    file_ = input("Please input live captions file path:")  
+    langaue_ = "ja"
+    is_translate_ = True
+    translate_lang_ = "zh"
+
+    srt_lines = livecaptions_to_srt(
+        live_file_name = file_,
+        language = langaue_,
+        is_translate = is_translate_,
+        translate_lang = translate_lang_
+    )
+
+    print("Sample SRT 0-7 lines:")
+    print("\n".join(srt_lines[:7]))
+    ```
+
 ### 查看帮助(help)和示例(sample)
 
     ```python

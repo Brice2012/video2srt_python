@@ -227,6 +227,27 @@ print("Sample SRT 0-7 lines:")
 print("\n".join(srt_lines[:7]))
 ```
 
+### Usage Example（used save_live_captions）
+
+```python
+from video2srt import livecaptions_to_srt
+
+file_ = input("Please input live captions file path:")  
+langaue_ = "ja"
+is_translate_ = True
+translate_lang_ = "zh"
+
+srt_lines = livecaptions_to_srt(
+    live_file_name = file_,
+    language = langaue_,
+    is_translate = is_translate_,
+    translate_lang = translate_lang_
+)
+
+print("Sample SRT 0-7 lines:")
+print("\n".join(srt_lines[:7]))
+```
+
 ### View Help and Samples
 
 ```python

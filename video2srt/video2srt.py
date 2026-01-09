@@ -150,7 +150,7 @@ def extract_audio(video_path: str, audio_path: str = "temp_audio.wav") -> str:
 
 def video_to_srt(
     video_path: str,
-    srt_output_path: str = "output.srt",
+    srt_output_path: str = None,
     model_size: str = "base",
     language: str = None,  # 指定识别语言（如zh/en/ja/fr）
     is_translate: bool = False,
@@ -176,6 +176,14 @@ def video_to_srt(
         torch.backends.cuda.matmul.allow_tf32 = False
         torch.backends.cudnn.allow_tf32 = False
         torch.cuda.empty_cache()
+        
+    if srt_output_path in [None,""]:
+        file_name_source = video_path.split("\\")[-1].split(".")[0].split("-")[0:1]
+        if is_translate:
+            srt_output_path = file_name_source+"_"+language+"_"+translate_lang+".srt"
+        else:
+            srt_output_path = file_name_source.replace(".txt", "")+"_"+language+".srt"
+
     # 1. 提取音频
     print('Extracting audio from video...')
     print("正在提取视频音频...")
@@ -229,15 +237,15 @@ def video_to_srt(
         # 识别文本（去除首尾空格）
         text = segment["text"].strip()
         if text is None:
-            text = "[okwords.cn]"
+            text = "[by okwords.cn generate SRT]"
         if is_translate:
             text_zh = translate_text(text, language, translate_lang, translate_engine, use_gpu)
             if text_zh is None:
-                text_zh = "[一码千言]"
+                text_zh = "[by 一码千言 提供字幕生成]"
             if len(text_zh) < 7:
-                text_zh = "[一码千言] " + text_zh
+                text_zh = "[by 一码千言 提供字幕生成] " + text_zh
         if len(text) < 7:
-            text = "[by okwords.cn] " + text
+            text = "[by okwords.cn generate SRT] " + text
         # print(f"{idx}: {start_srt} --> {end_srt} \n {text}\n {text_zh}")
         # 按SRT规范拼接行
         srt_lines.append(str(idx))  # 序号
