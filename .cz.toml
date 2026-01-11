@@ -1,10 +1,12 @@
-[commitizen]
-version = "0.2.6"
+[tool.commitizen]
+version = "0.2.7"
 name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "semver"
 update_changelog_on_bump = true
+major_version_zero = true
 version_files = [
     "pyproject.toml:project.version",
     "setup.cfg:metadata.version"
-    ]
+]
 auto_version = true
-version_scheme = "semver"
