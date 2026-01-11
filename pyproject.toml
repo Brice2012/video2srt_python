@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"  # 构建后端
 
 [project]
 name = "video2srt"
-version = "0.2.6"
+version = "0.2.5"
 description = "This is a simple project that converts speech from video into subtitles by brice"
 readme = "README.md"
 requires-python = ">=3.13.5"
@@ -30,8 +30,3 @@ version_scheme = "semver"
 version_provider = "uv"
 update_changelog_on_bump = true
 major_version_zero = true
-version_files = [
-    "pyproject.toml:project.version",
-    "setup.cfg:metadata.version"
-]
-auto_version = true
