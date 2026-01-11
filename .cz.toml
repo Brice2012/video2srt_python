@@ -1,0 +1,10 @@
+[commitizen]
+version = "0.2.5"
+name = "cz_conventional_commits"
+update_changelog_on_bump = true
+version_files = [
+    "pyproject.toml:project.version",
+    "setup.cfg:metadata.version"
+    ]
+auto_version = true
+version_scheme = "semver"

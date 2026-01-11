@@ -32,6 +32,8 @@
     srt_lines = video_to_srt(
         video_path = 'input.mp4',       
         # 输入视频路径
+        is_audio = False, 
+        # 是否为音频文件，默认值：False, 若为True，则直接使用音频文件进行识别
         srt_output_path = 'output.srt', 
         # 输出字幕路径
         model_size = 'base', 
@@ -184,6 +186,8 @@ python >= 3.13.5
 
     VIDEO_PATH = input("Please input video file path:")  
     # 视频文件路径
+    IS_AUDIO = False       
+    # 是否为音频文件，默认值：False, 若为True，则直接使用音频文件进行识别
     SRT_OUTPUT = "test_out.srt"  
     # 输出SRT路径
     MODEL_SIZE = "base"  
@@ -203,6 +207,7 @@ python >= 3.13.5
     # ## 生成SRT（使用video_to_srt函数）
     srt_lines = video_to_srt(
         video_path = VIDEO_PATH,
+        is_audio = IS_AUDIO,
         srt_output_path = SRT_OUTPUT,
         model_size = MODEL_SIZE,
         language = LANGUAGE,

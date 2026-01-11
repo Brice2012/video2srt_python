@@ -34,6 +34,8 @@ from video2srt import video_to_srt
 srt_lines = video_to_srt(
     video_path = 'input.mp4',       
     # Input video path
+    is_audio = False, 
+    # Whether the input is an audio file, default value: False. If True, the audio file will be used directly for recognition
     srt_output_path = 'output.srt', 
     # Output subtitle path
     model_size = 'base', 
@@ -195,6 +197,8 @@ from video2srt import video_to_srt
 
 VIDEO_PATH = input("Please input video file path:")  
 # Video file path
+IS_AUDIO = False       
+# Whether the input is an audio file, default value: False. If True, the audio file will be used directly for recognition
 SRT_OUTPUT = "test_out.srt"  
 # Output SRT path
 MODEL_SIZE = "base"  
@@ -214,6 +218,7 @@ USE_GPU = True
 # ## Generate SRT (using the video_to_srt function)
 srt_lines = video_to_srt(
     video_path = VIDEO_PATH,
+    is_audio = IS_AUDIO,
     srt_output_path = SRT_OUTPUT,
     model_size = MODEL_SIZE,
     language = LANGUAGE,

@@ -7,7 +7,10 @@
 
 #%%
 # 导入需要的包
+from operator import is_
 import os, datetime, time, random
+
+from openai import audio
 import whisper
 import subprocess
 import torch
@@ -150,6 +153,7 @@ def extract_audio(video_path: str, audio_path: str = "temp_audio.wav") -> str:
 
 def video_to_srt(
     video_path: str,
+    is_audio: bool = False,
     srt_output_path: str = None,
     model_size: str = "base",
     language: str = None,  # 指定识别语言（如zh/en/ja/fr）
@@ -178,17 +182,22 @@ def video_to_srt(
         torch.cuda.empty_cache()
         
     if srt_output_path in [None,""]:
-        file_name_source = video_path.split("\\")[-1].split(".")[0].split("-")[0:1]
+        file_name_source = video_path.split("\\")[-1].split(".")[0].split("-")[0] + video_path.split("\\")[-1].split(".")[0].split("-")[1]
         if is_translate:
             srt_output_path = file_name_source+"_"+language+"_"+translate_lang+".srt"
         else:
             srt_output_path = file_name_source.replace(".txt", "")+"_"+language+".srt"
 
     # 1. 提取音频
-    print('Extracting audio from video...')
-    print("正在提取视频音频...")
-    audio_path = extract_audio(video_path)
-    
+    if not is_audio:
+        print('Extracting audio from video...')
+        print("正在提取视频音频...")
+        audio_path = extract_audio(video_path)
+    else:
+        print("Resampling audio to [16kHz]...")
+        print(f"正在重采样音频...")
+        udio_path = extract_audio(video_path)
+        
     # 2. 加载Whisper模型（自动下载，首次运行较慢）
     print(f"Loading Whisper {model_size} model...")
     print(f"加载Whisper {model_size} 模型...")
@@ -277,6 +286,7 @@ def video_to_srt(
 if __name__ == "__main__":
     # 配置参数
     VIDEO_PATH = "test_video.mp4"  # 你的视频文件路径
+    IS_AUDIO = False  # 是否输入音频文件，True则直接使用音频文件
     SRT_OUTPUT = "test_out.srt"  # 输出SRT路径
     MODEL_SIZE = "base"  # 模型大小（large精度更高，需更多显存，处理时间更长）
     LANGUAGE = "ja"      # 识别语言（日语）
@@ -288,6 +298,7 @@ if __name__ == "__main__":
     # 生成SRT
     srt_lines = video_to_srt(
         video_path = VIDEO_PATH,
+        is_audio= IS_AUDIO,
         srt_output_path = SRT_OUTPUT,
         model_size = MODEL_SIZE,
         language = LANGUAGE,

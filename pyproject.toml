@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"  # 构建后端
 
 [project]
 name = "video2srt"
-version = "0.2.3"
+version = "0.2.5"
 description = "This is a simple project that converts speech from video into subtitles by brice"
 readme = "README.md"
 requires-python = ">=3.13.5"
