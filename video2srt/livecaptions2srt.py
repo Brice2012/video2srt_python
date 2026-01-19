@@ -5,11 +5,8 @@
 
 #%%
 # 导入必要的包
-from operator import is_
-import re, time, random, os, tqdm
+import re, tqdm
 from datetime import datetime, timedelta
-from transformers import pipeline
-from transformers import M2M100ForConditionalGeneration, M2M100Tokenizer
 import torch
 from .video2srt import translate_text
 

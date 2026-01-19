@@ -7,10 +7,8 @@
 
 #%%
 # 导入需要的包
-from operator import is_
 import os, datetime, time, random
 
-from openai import audio
 import whisper
 import subprocess
 import torch
